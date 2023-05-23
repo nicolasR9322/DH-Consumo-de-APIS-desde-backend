@@ -3,7 +3,9 @@ const db = require('../../database/models');
 const sequelize = db.sequelize;
 const { Op } = require("sequelize");
 const moment = require('moment');
-
+const fetch = require("node-fetch");
+const key = "apikey=98d7a67e"
+const url = "https://www.omdbapi.com/"
 
 //Aqui tienen otra forma de llamar a cada uno de los modelos
 const Movies = db.Movie;
@@ -173,6 +175,14 @@ const moviesAPIController = {
             res.json(respuesta);
         })    
         .catch(error => res.send(error))
+    },
+    search: async (req,res) => {
+        let titulo = req.body.titulo;
+        let movie = await fetch(`${url}/?t=${titulo}&${key}`).then(response => response.json());
+       
+        res.render("moviesDetailOmdb", {
+            movie
+        })
     }
     
 }

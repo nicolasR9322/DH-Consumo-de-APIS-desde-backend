@@ -15,5 +15,7 @@ router.post('/create', moviesAPIController.create);
 router.put('/update/:id', moviesAPIController.update);
 //Eliminar una película
 router.delete('/delete/:id', moviesAPIController.destroy);
+// api busqueda
+router.post("/buscar", moviesAPIController.search)
 
 module.exports = router;

@@ -5,6 +5,10 @@ descripcion: El objetivo será consumir una API de terceros desde el backend, us
     Preparaciones previas:
         - trabajo en express
         - API de terceros proporcionada : "https://www.omdbapi.com/"
+        - generar el token correspondiente
 
+    desafio 1:
 
+        - traer los datos de una pelicula desde la api publica proporcionada
+        - mostrarlos en la vista del formulario
     
