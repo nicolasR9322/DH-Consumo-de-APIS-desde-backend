@@ -8,9 +8,13 @@ const app = express();
 const indexRouter = require('./routes/index');
 const moviesRoutes = require('./routes/moviesRoutes');
 const genresRoutes = require('./routes/genresRoutes');
-const APIgenresRoutes = require("./routes/api/genresRoutes");
-const APImovieRoutes = require("./routes/api/moviesRoutes")
-//Aquí pueden colocar las rutas de las APIs
+
+//Aquí llamo a la ruta de las api de movies
+const apiMoviesRouter = require('./routes/api/movies')
+//Aquí llamo a la ruta de las api de actors
+const apiGenresRouter = require('./routes/api/genres')
+//Aquí llamo a la ruta de las api de actors
+const apiActorsRouter = require('./routes/api/actors')
 
 
 // view engine setup
@@ -24,14 +28,14 @@ app.use(express.urlencoded({ extended: false }));
 
 //Aquí estoy disponiendo la posibilidad para utilizar el seteo en los formularios para el usod e los metodos put ó delete
 app.use(methodOverride('_method'));
-app.use(express.json());
-
 
 app.use('/', indexRouter);
 app.use(moviesRoutes);
 app.use(genresRoutes);
-app.use("/api/genres", APIgenresRoutes);
-app.use("/api/movies", APImovieRoutes)
+//Aquí creo la colección de mis recursos de movies (APIs)
+app.use('/api/movies',apiMoviesRouter);
+app.use('/api/actors',apiActorsRouter);
+app.use('/api/genres',apiGenresRouter);
 
 
 //Activando el servidor desde express
