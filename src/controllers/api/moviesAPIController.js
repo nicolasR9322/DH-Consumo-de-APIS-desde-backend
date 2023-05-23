@@ -71,110 +71,56 @@ const moviesAPIController = {
         })
         .catch(error => console.log(error))
     },
-    create: (req,res) => {
-        Movies
-        .create(
-            {
-                title: req.body.title,
-                rating: req.body.rating,
-                awards: req.body.awards,
-                release_date: req.body.release_date,
-                length: req.body.length,
-                genre_id: req.body.genre_id
-            }
-        )
-        .then(confirm => {
-            let respuesta;
-            if(confirm){
-                respuesta ={
-                    meta: {
-                        status: 200,
-                        total: confirm.length,
-                        url: 'api/movies/create'
-                    },
-                    data:confirm
-                }
-            }else{
-                respuesta ={
-                    meta: {
-                        status: 200,
-                        total: confirm.length,
-                        url: 'api/movies/create'
-                    },
-                    data:confirm
-                }
-            }
-            res.json(respuesta);
-        })    
-        .catch(error => res.send(error))
+    create: function (req,res) {
+        
+        const newMovie = {
+           ...req.body
+        }
+
+        Movies.create(newMovie)
+        .then(() => {
+            return res.status(200).json({
+                data : newMovie,
+                status: 200
+            })
+        })
+        
+
+            //return res.redirect('/movies')
+        
     },
     update: (req,res) => {
         let movieId = req.params.id;
+
+        const updateMovie = {
+            ...req.body
+         }
         Movies.update(
-            {
-                title: req.body.title,
-                rating: req.body.rating,
-                awards: req.body.awards,
-                release_date: req.body.release_date,
-                length: req.body.length,
-                genre_id: req.body.genre_id
-            },
+            updateMovie,
             {
                 where: {id: movieId}
         })
-        .then(confirm => {
-            let respuesta;
-            if(confirm){
-                respuesta ={
-                    meta: {
-                        status: 200,
-                        total: confirm.length,
-                        url: 'api/movies/update/:id'
-                    },
-                    data:confirm
-                }
-            }else{
-                respuesta ={
-                    meta: {
-                        status: 204,
-                        total: confirm.length,
-                        url: 'api/movies/update/:id'
-                    },
-                    data:confirm
-                }
-            }
-            res.json(respuesta);
+        .then(() => {
+            return res.status(200).json({
+                data : updateMovie,
+                status: 200
+            })
         })    
         .catch(error => res.send(error))
     },
-    destroy: (req,res) => {
+    destroy: function (req,res) {
+        
         let movieId = req.params.id;
         Movies
         .destroy({where: {id: movieId}, force: true}) // force: true es para asegurar que se ejecute la acción
-        .then(confirm => {
-            let respuesta;
-            if(confirm){
-                respuesta ={
-                    meta: {
-                        status: 200,
-                        total: confirm.length,
-                        url: 'api/movies/destroy/:id'
-                    },
-                    data:confirm
+        .then((movie)=>{
+            return res.status(200).json({
+                data: movie,
+                meta: {
+                    status : 200
                 }
-            }else{
-                respuesta ={
-                    meta: {
-                        status: 204,
-                        total: confirm.length,
-                        url: 'api/movies/destroy/:id'
-                    },
-                    data:confirm
-                }
-            }
-            res.json(respuesta);
-        })    
-        .catch(error => res.send(error))
+            })})
+        .catch(error => res.send(error)) 
     },
     search: async (req,res) => {
         let titulo = req.body.titulo;

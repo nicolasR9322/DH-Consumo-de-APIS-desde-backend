@@ -12,3 +12,8 @@ descripcion: El objetivo será consumir una API de terceros desde el backend, us
         - traer los datos de una pelicula desde la api publica proporcionada
         - mostrarlos en la vista del formulario
     
+    desafio 2:
+        -utilizando POSTMAN
+            - hacer las funcionalidades necesarias para crear mediante el metodo POST
+            - hacer las funcionalidades necesarias para modificar mediante el metodo PUT
+            - hacer las funcionalidades necesarias para eliminar mediante el metodo DELETE
